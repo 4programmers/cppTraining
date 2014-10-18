@@ -1,3 +1,6 @@
+/*
+To program stryka, kojarzysz to tak jak smak toffika
+*/
 #include <fstream>
 #include <vector>
 #include <string>
@@ -64,6 +67,8 @@ void checkArguments( int argc, char *argv[] )
 int main(int argc, char *argv[])
 {
 	strVec syllables;
+
+	std::cout << "To program stryka, kojarzysz to tak jak smak toffika.\n\n";
 
 	checkArguments( argc, argv );
 
