@@ -15,7 +15,7 @@ public:
     typedef vector<string> Cores;
     typedef vector<string> Sufixes;
 public:
-        RandomNameGenerator(
+    RandomNameGenerator(
         const Prefixes &, 
         const Cores &, 
         const Sufixes &,
