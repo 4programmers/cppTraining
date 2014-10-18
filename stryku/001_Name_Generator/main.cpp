@@ -6,11 +6,8 @@ To program stryka, kojarzysz to tak jak smak toffika
 #include <string>
 #include <iostream>
 
-const int MAX_SYLLABLES_ID_WORD = 3;
 
-typedef std::vector<std::string> strVec;
-
-bool getSyllables(strVec &syllables)
+bool getSyllables( std::vector<std::string> &syllables )
 {
 	std::ifstream syllablesFile;
 	int syllablesCount;
@@ -31,13 +28,15 @@ bool getSyllables(strVec &syllables)
 	return true;
 }
 
-void generateNames( strVec &syllables, std::string &name, int lev )
+void generateNames( std::vector<std::string> &syllables, std::string &name, int lev )
 {
+	const int maxSyllablesInWord = 3;
+
 	for( std::string &i : syllables )
 	{
 		std::cout << name << i << "\n";
 
-		if( lev + 1 < MAX_SYLLABLES_ID_WORD )
+		if( lev + 1 < maxSyllablesInWord )
 			generateNames( syllables, name + i, lev + 1 );
 	}
 }
@@ -65,7 +64,7 @@ void checkArguments( int argc, char *argv[] )
 
 int main(int argc, char *argv[])
 {
-	strVec syllables;
+	std::vector<std::string> syllables;
 
 	std::cout << "To program stryka, kojarzysz to tak jak smak toffika.\n\n";
 
