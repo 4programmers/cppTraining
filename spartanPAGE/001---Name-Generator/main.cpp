@@ -15,7 +15,7 @@ public:
     typedef vector<string> Cores;
     typedef vector<string> Sufixes;
 public:
-        RandomNameGenerator(
+    RandomNameGenerator(
         const Prefixes &, 
         const Cores &, 
         const Sufixes &,
@@ -27,7 +27,7 @@ private:
     Prefixes _prefixes;
     Cores _cores;
     Sufixes _sufixes;
-    default_random_engine &_dre;
+    default_random_engine _dre;
 };
 
 RandomNameGenerator::RandomNameGenerator(
