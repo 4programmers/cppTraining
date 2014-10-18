@@ -1,5 +1,6 @@
 /*
-    Whole following code was written in ideone.com, so here is just a one file
+    Whole following code was written in ideone.com, 
+    so here is just a one file
 */
 
 #include <iostream>
