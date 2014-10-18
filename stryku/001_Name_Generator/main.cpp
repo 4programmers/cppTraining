@@ -5,7 +5,6 @@ To program stryka, kojarzysz to tak jak smak toffika
 #include <vector>
 #include <string>
 #include <iostream>
-#include <conio.h>
 
 const int MAX_SYLLABLES_ID_WORD = 3;
 
@@ -79,8 +78,6 @@ int main(int argc, char *argv[])
 	}
 
 	generateNames( syllables, std::string(), 0 );
-
-	getch();
 
 	return 0;
 }
