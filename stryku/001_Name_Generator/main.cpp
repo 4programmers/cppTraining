@@ -44,18 +44,6 @@ std::vector<std::string> generateNames( const std::vector<std::string> &syllable
 	return allGeneratedNames;
 }
 
-void printHelp()
-{
-	std::cout << "**** MANUAL ****\n\n";
-	std::cout << "This program is generating names from syllables.\n"\
-		<< "Put some syllables to \"syllables.txt\" file\n"\
-		<< "Structure of file should be like this:\n\n"\
-		<< "In first place number of syllables, after that, syllables seperated by white spaces.\n\n"\
-		<< "For example see included file \"syllables.txt\"\n"\
-		<< "Down there \\/ can you see generated names for that file\n\n"\
-		<< "********************\n\n\n";
-}
-
 void printSignature()
 {
 	std::cout << "To program stryka, kojarzysz to tak jak smak toffika.\n\n";
