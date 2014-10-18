@@ -6,39 +6,42 @@ To program stryka, kojarzysz to tak jak smak toffika
 #include <string>
 #include <iostream>
 
+void generateNewNames( const std::vector<std::string> &, std::vector<std::string> &, std::string = std::string(), int = 0 );
 
-bool getSyllables( std::vector<std::string> &syllables )
+std::vector<std::string> loadSyllables( std::istream &istream )
 {
-	std::ifstream syllablesFile;
-	int syllablesCount;
+	std::string temp;
+	std::vector<std::string> ret;
 
-	syllablesFile.open( "syllables.txt" );
+	if( istream.good() )
+	{
+		while( istream >> temp )
+			ret.push_back( temp );
+	}
 
-	if( !syllablesFile.is_open() )
-		return false;
-
-	syllablesFile >> syllablesCount;
-	syllables.resize( syllablesCount );
-
-	while( syllablesCount-- )
-		syllablesFile >> syllables[syllablesCount];
-
-	syllablesFile.close();
-
-	return true;
+	return ret;
 }
 
-void generateNames( std::vector<std::string> &syllables, std::string &name, int lev )
+void generateNewNames( const std::vector<std::string> &syllables, std::vector<std::string> &allGeneratedNames, std::string name, int syllablesInWord )
 {
 	const int maxSyllablesInWord = 3;
 
-	for( std::string &i : syllables )
+	for( const std::string &syllable : syllables )
 	{
-		std::cout << name << i << "\n";
+		allGeneratedNames.push_back( name + syllable );
 
-		if( lev + 1 < maxSyllablesInWord )
-			generateNames( syllables, name + i, lev + 1 );
+		if( syllablesInWord + 1 < maxSyllablesInWord )
+			generateNewNames( syllables, allGeneratedNames, name + syllable, syllablesInWord + 1 );
 	}
+}
+
+std::vector<std::string> generateNames( const std::vector<std::string> &syllables )
+{
+	std::vector<std::string> allGeneratedNames;
+
+	generateNewNames( syllables, allGeneratedNames );
+
+	return allGeneratedNames;
 }
 
 void printHelp()
@@ -53,30 +56,33 @@ void printHelp()
 		<< "********************\n\n\n";
 }
 
-void checkArguments( int argc, char *argv[] )
+void printSignature()
 {
-	if( argc > 1 )
-	{
-		if( strcmp( "help", argv[1] ) == 0 )
-			printHelp();
-	}
+	std::cout << "To program stryka, kojarzysz to tak jak smak toffika.\n\n";
 }
 
-int main(int argc, char *argv[])
+void printVector( const std::vector<std::string> &v )
 {
-	std::vector<std::string> syllables;
+	for( const std::string &i : v )
+		std::cout << i << "\n";
+}
 
-	std::cout << "To program stryka, kojarzysz to tak jak smak toffika.\n\n";
+void printGeneratedNames( const std::vector<std::string> &names, std::vector<std::string> &syllables )
+{
+	std::cout << "Used syllables:\n\n";
+	printVector( syllables );
+	std::cout << "\n\nGenerated names:\n\n";
+	printVector( names );
+}
 
-	checkArguments( argc, argv );
+int main()
+{
+	std::vector<std::string> syllables, generatedNames;
 
-	if( !getSyllables( syllables ) )
-	{
-		std::cout << "File \"syllables.txt\" not found. Program will shut down.";
-		return 1;
-	}
-
-	generateNames( syllables, std::string(), 0 );
+	printSignature();
+	syllables = loadSyllables( std::ifstream( "syllables.txt" ) );
+	generatedNames = generateNames( syllables );
+	printGeneratedNames( generatedNames, syllables );
 
 	return 0;
 }
