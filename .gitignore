@@ -30,6 +30,9 @@ Makefile
 cmake_install.cmake
 install_manifest.txt
 
+# Code Blocks
+*.cbp
+
 # Visual Studio
 
 # User-specific files
