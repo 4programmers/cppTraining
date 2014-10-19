@@ -53,7 +53,7 @@ private:
         };
     }
     void constructContainersArray(){
-         _containers = std::array<ContainerType *, 3>{
+         _containers = std::array<ContainerType *, Count>{
              &_prefixes, &_cores, &_sufixes
         };
     }
@@ -61,7 +61,7 @@ private:
     typedef std::uniform_int_distribution<int> Distro;
     enum{ PrefixID, CoreID, SufixID, Count /* <-- Have to be the last!*/};
     std::array<Distro, Count> _distros;
-    std::array<ContainerType *, 3> _containers;
+    std::array<ContainerType *, Count> _containers;
 private:
     Prefixes _prefixes;
     Cores _cores;
