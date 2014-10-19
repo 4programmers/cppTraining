@@ -1,5 +1,4 @@
 cppTraining
-===========
 
 How to start a project?
 `1. Get actual task from 'tasks.txt'
