@@ -4,9 +4,14 @@
 #include <array>
 #include <string>
 #include <random>
+#include <algorithm>
+
+template<typename T>
+struct RandomNameGeneratorDataCorrector;
 
 template<typename RandomEngine = std::default_random_engine>
 class RandomNameGenerator{
+    friend RandomNameGeneratorDataCorrector<RandomEngine>;
 public:
     typedef std::vector<std::string> ContainerType;
     typedef ContainerType Prefixes;
@@ -20,7 +25,8 @@ public:
         const Sufixes &sufixes,
         RandomEngine &re
     ): _prefixes(prefixes), _cores(cores), _sufixes(sufixes), _re(re){
-        correctContainers();
+        constructContainersArray();
+        RandomNameGeneratorDataCorrector<RandomEngine>()(this);
         constructDistros();
     }
 
@@ -46,26 +52,47 @@ private:
             Distro(0, _sufixes.size()-1)
         };
     }
-    void correctContainers(){
-        //Dunno why, but compiler screamed at me when i used references;
-        //Probably becouse it's called in constructor.
-        std::vector<ContainerType *> containers = {
+    void constructContainersArray(){
+         _containers = std::array<ContainerType *, 3>{
              &_prefixes, &_cores, &_sufixes
         };
-        for(auto *container : containers)
-            correctContainer(*container);
     }
-    void correctContainer(ContainerType &container){
-        if(container.empty())
-            container.push_back("");
+    void reserveMinimalResultSize(){
+        size_t min = 0;
+        auto begin = std::begin(_containers), end = std::end(_containers);
+        std::for_each(
+            begin,
+            end,
+            [&min, &begin, &end](ContainerType *container){
+                min += std::min_element(begin, end);
+            }
+        );
     }
 private:
     typedef std::uniform_int_distribution<int> Distro;
     enum{ PrefixID, CoreID, SufixID, Count /* <-- Have to be the last!*/};
     std::array<Distro, Count> _distros;
+    std::array<ContainerType *, 3> _containers;
 private:
     Prefixes _prefixes;
     Cores _cores;
     Sufixes _sufixes;
     RandomEngine &_re;
+};
+
+template<typename T>
+struct RandomNameGeneratorDataCorrector{
+    typedef RandomNameGenerator<T> RNG;
+    void operator()(RNG *rng){
+        //Dunno why, but compiler screamed at me when i used references;
+        //Probably becouse it's called in constructor.
+        std::for_each(
+            std::begin(rng->_containers),
+            std::end(rng->_containers),
+            [](typename RNG::ContainerType *container){
+                if(container->empty())
+                    container->push_back("");
+            }
+        );
+    }
 };
