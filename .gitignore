@@ -33,6 +33,7 @@ install_manifest.txt
 # Code Blocks
 *.cbp
 *.depend
+*.layout
 
 # Visual Studio
 
