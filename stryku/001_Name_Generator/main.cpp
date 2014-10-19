@@ -24,7 +24,7 @@ std::vector<std::string> loadSyllables( std::istream &istream )
 
 void generateNewNames( const std::vector<std::string> &syllables, std::vector<std::string> &allGeneratedNames, std::string name, int syllablesInWord )
 {
-	const int maxSyllablesInWord = 3;
+	const unsigned int maxSyllablesInWord = 3;
 
 	for( const std::string &syllable : syllables )
 	{
