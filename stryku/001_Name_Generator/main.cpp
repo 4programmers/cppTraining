@@ -6,20 +6,12 @@ To program stryka, kojarzysz to tak jak smak toffika
 #include <string>
 #include <iostream>
 
+
 void generateNewNames( const std::vector<std::string> &, std::vector<std::string> &, std::string = std::string(), int = 0 );
 
 std::vector<std::string> loadSyllables( std::istream &istream )
 {
-	std::string temp;
-	std::vector<std::string> ret;
-
-	if( istream.good() )
-	{
-		while( istream >> temp )
-			ret.push_back( temp );
-	}
-
-	return ret;
+	return std::vector<std::string>{ std::istream_iterator<std::string>( istream ), std::istream_iterator<std::string>() };
 }
 
 void generateNewNames( const std::vector<std::string> &syllables, std::vector<std::string> &allGeneratedNames, std::string name, int syllablesInWord )
@@ -65,11 +57,10 @@ void printGeneratedNames( const std::vector<std::string> &names, std::vector<std
 
 int main()
 {
-	std::vector<std::string> syllables, generatedNames;
+	std::vector<std::string> syllables = loadSyllables( std::ifstream( "d.txt" ) ),
+							generatedNames = generateNames( syllables );
 
 	printSignature();
-	syllables = loadSyllables( std::ifstream( "syllables.txt" ) );
-	generatedNames = generateNames( syllables );
 	printGeneratedNames( generatedNames, syllables );
 
 	return 0;
