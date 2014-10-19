@@ -5,12 +5,12 @@
 #include <string>
 #include <random>
 
+template<typename RandomEngine = std::default_random_engine>
 class RandomNameGenerator{
 public:
     typedef std::vector<std::string> Prefixes;
     typedef std::vector<std::string> Cores;
     typedef std::vector<std::string> Sufixes;
-    typedef std::default_random_engine RandomEngine;
     typedef std::string Result;
 public:
     RandomNameGenerator(
