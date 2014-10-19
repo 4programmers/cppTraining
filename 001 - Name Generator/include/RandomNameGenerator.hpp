@@ -57,17 +57,6 @@ private:
              &_prefixes, &_cores, &_sufixes
         };
     }
-    void reserveMinimalResultSize(){
-        size_t min = 0;
-        auto begin = std::begin(_containers), end = std::end(_containers);
-        std::for_each(
-            begin,
-            end,
-            [&min, &begin, &end](ContainerType *container){
-                min += std::min_element(begin, end);
-            }
-        );
-    }
 private:
     typedef std::uniform_int_distribution<int> Distro;
     enum{ PrefixID, CoreID, SufixID, Count /* <-- Have to be the last!*/};
