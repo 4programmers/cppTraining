@@ -1,0 +1,12 @@
+<Catch name="001 - Name Generator - tests.exe">
+  <Group>
+    <TestCase name="RandomNameGenerator works well without arguments">
+      <Section name="A RandomNameGenerator with &quot;&quot; in constructor and 0's in when called for generate">
+        <OverallResults successes="1" failures="0" expectedFailures="0"/>
+      </Section>
+      <OverallResult success="true"/>
+    </TestCase>
+    <OverallResults successes="1" failures="0" expectedFailures="0"/>
+  </Group>
+  <OverallResults successes="1" failures="0" expectedFailures="0"/>
+</Catch>
