@@ -6,12 +6,20 @@
 #include <random>
 #include <algorithm>
 
-template<typename T>
-struct RandomNameGeneratorDataCorrector;
-
 template<typename RandomEngine = std::default_random_engine>
 class RandomNameGenerator{
-    friend RandomNameGeneratorDataCorrector<RandomEngine>;
+    struct DataCorrector{
+        void operator()(RandomNameGenerator *rng){
+            std::for_each(
+                std::begin(rng->_containers),
+                std::end(rng->_containers),
+                [](ContainerType *container){
+                    if(container->empty())
+                        container->push_back("");
+                }
+            );
+        }
+    };
 public:
     typedef std::vector<std::string> ContainerType;
     typedef ContainerType Prefixes;
@@ -26,7 +34,7 @@ public:
         RandomEngine &re
     ): _prefixes(prefixes), _cores(cores), _sufixes(sufixes), _re(re){
         constructContainersArray();
-        RandomNameGeneratorDataCorrector<RandomEngine>()(this);
+        DataCorrector()(this);
         constructDistros();
     }
 
@@ -67,21 +75,4 @@ private:
     Cores _cores;
     Sufixes _sufixes;
     RandomEngine &_re;
-};
-
-template<typename T>
-struct RandomNameGeneratorDataCorrector{
-    typedef RandomNameGenerator<T> RNG;
-    void operator()(RNG *rng){
-        //Dunno why, but compiler screamed at me when i used references;
-        //Probably becouse it's called in constructor.
-        std::for_each(
-            std::begin(rng->_containers),
-            std::end(rng->_containers),
-            [](typename RNG::ContainerType *container){
-                if(container->empty())
-                    container->push_back("");
-            }
-        );
-    }
 };
