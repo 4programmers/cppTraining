@@ -1,0 +1,1 @@
+If you're looking for tests, they're in the "001 - Name Generator - tests" project
