@@ -4,24 +4,24 @@
 using namespace std;
 
 int main() {
-    default_random_engine dre;
+    default_random_engine dre(5);
     size_t times, minCores, maxCores;
     cin >> times >> minCores >> maxCores;
-    RandomNameGenerator rng(
-        RandomNameGenerator::Prefixes{
+    RandomNameGenerator<> rng(
+        RandomNameGenerator<>::Prefixes{
             "Bal", "Ner",
             "Xerth", "Vorc", "Norm",
             "Vaz", "Treth", "Melr",
             "Jatr", "Urugd", "Petr"
         },
-        RandomNameGenerator::Cores{
+        RandomNameGenerator<>::Cores{
             "",
             "adur", "aes", "anim", "apoll", "imac",
             "educ", "equis", "extr", "guius", "haun",
             "equi", "amora", "hum", "iace", "ille",
             "inept", "iuv", "obe", "ocul", "orbis"
         },
-        RandomNameGenerator::Sufixes{
+        RandomNameGenerator<>::Sufixes{
             "us", "as", "es", "ex",
             "aus", "irg", "orex", "or",
             "ator", "arox", "urh"
