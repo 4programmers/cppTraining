@@ -5,7 +5,7 @@
 
 TEST_CASE("RandomNameGenerator works well without arguments", "[RandomNameGenerator]"){
     int seed = 5;
-    std::default_random_engine re(5);
+    std::default_random_engine re(seed);
     SECTION("A RandomNameGenerator with \"\" in constructor and 0's in call()"){
         RandomNameGenerator<> rng(
             RandomNameGenerator<>::Prefixes{""},
